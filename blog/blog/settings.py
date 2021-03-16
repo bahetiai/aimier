@@ -130,16 +130,16 @@ STATICFILES_DIRS =[
     os.path.join(BASE_DIR,'static')
 ]
 
-#redis的配置
-CACHES ={
-    'default':{#默认
-        'BACKEND':'django_redis.cache.RedisCache',
-        'LOCATION':'redis://127.0.0.1:6379/0',
-        'OPTIONS':{
-            'CLIENT_CLASS':'django_redis.client.DefaultClient',
+#  redis的配置
+CACHES = {
+    'default': {  # 默认
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     },
-    'session':{#session
+    'session': {  # session
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://127.0.0.1:6379/1',
         'OPTIONS': {
@@ -147,9 +147,9 @@ CACHES ={
         }
     },
 }
-#session由数据库存储改为redis
-SESSION_ENGINE ='django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS ='session'
+# session由数据库存储改为redis
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'session'
 
 
 # 日志

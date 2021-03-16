@@ -8,7 +8,7 @@
 # 进行users的子路由设置
 # 定义访问路径与处理器的映射关系
 from django.urls import path
-from users.views import RegisterBht, LoginBht, ImageCodeView
+from users.views import RegisterBht, LoginBht, ImageCodeView, SmsCodeView
 
 urlpatterns = [
     # 参数1：路由
@@ -18,5 +18,8 @@ urlpatterns = [
     path('login/', LoginBht.as_view()),
 
     # 图片验证码路由
-    path('imagecode/', ImageCodeView.as_view())
+    path('imagecode/', ImageCodeView.as_view()),
+    # 短信发送
+    path('smscode/', SmsCodeView.as_view())
+
 ]
