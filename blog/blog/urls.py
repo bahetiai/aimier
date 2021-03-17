@@ -31,7 +31,10 @@ from django.http import HttpResponse
 # 在工程的urls.py总路由中添加子应用路由引导
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(("users.urls", "users"), namespace="users"))
+    path('', include(("users.urls", "users"), namespace="users")),
     # path('', log),
+
+    path('', include(('home.urls','home'),namespace='home')),
 ]
+
 

@@ -6,6 +6,8 @@ import re
 from django.http.response import HttpResponseBadRequest
 from  users.models import User
 from django.db import DatabaseError
+from django.shortcuts import redirect
+from django.urls import reverse
 #定义视图层
 class RegisterBht(View):
         '''用户注册'''
@@ -71,7 +73,10 @@ class RegisterBht(View):
                 return  HttpResponseBadRequest('注册失败')
             #             4、返回响应，跳转到指定页面
             # 暂时返回一个注册成功的信息，后期在实现跳转到指定页面
-            return HttpResponse('注册成功，重定向的首页')
+            # redirect 是进行重定向
+            # reverse  是可以通过namespace:name来获取到视图所对应的路由
+            return redirect('home:index')
+            # return HttpResponse('注册成功，重定向的首页')
 
 
 
