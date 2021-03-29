@@ -71,12 +71,20 @@ class RegisterBht(View):
             except DatabaseError as e:
                 logger.error(e)
                 return  HttpResponseBadRequest('注册失败')
+
+            from django.contrib.auth import login
+            login(request,user)
             #             4、返回响应，跳转到指定页面
             # 暂时返回一个注册成功的信息，后期在实现跳转到指定页面
             # redirect 是进行重定向
             # reverse  是可以通过namespace:name来获取到视图所对应的路由
-            return redirect('home:index')
+            # 设置coookie信息需要通过response设置，所以将return换成responses
+            response = redirect('home:index')
             # return HttpResponse('注册成功，重定向的首页')
+            # 设置cookie信息，以方便首页中用户信息展示的判断和用户信息的展示
+            response.set_cookie('is_login',True)
+            response.set_cookie('username',user.username,max_age=7*24*3600)
+            return response
 
 
 
@@ -125,6 +133,7 @@ class ImageCodeView(View):
         redis_conn.setex('img:%s' % uuid, 300, text)
         # 5、返回图片二进制
         return HttpResponse(image, content_type='image/jpeg')
+
 
 
 from django.http.response import JsonResponse

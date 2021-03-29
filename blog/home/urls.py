@@ -9,5 +9,5 @@ from django.urls import path
 from home.views import IndexView
 urlpatterns =[
     #首页路由
-    path('index/', IndexView.as_view(), name='index'),
+    path('index/', IndexView.as_view(), name='index'),#
 ]
