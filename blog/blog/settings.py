@@ -134,14 +134,14 @@ STATICFILES_DIRS =[
 CACHES = {
     'default': {  # 默认
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://47.101.141.169:6379/blog_biz',
+        'LOCATION': 'redis://47.101.141.169:6379/0',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     },
     'session': {  # session
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://47.101.141.169:6379/blog_session',
+        'LOCATION': 'redis://47.101.141.169:6379/1',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -197,3 +197,13 @@ LOGGING = {
 #替换 系统的User来使用我们自定定义的User
 #配置信息为 '子应用名.模型类型'
 AUTH_USER_MODEL ='users.User'
+
+
+# 修改系统的未登录跳转连接
+LOGIN_URL ="/login/"
+
+# 设置上传的图片，保存在media目录下
+MEDIA_ROOT =os.path.join(BASE_DIR, 'media/')
+
+# 设置图片访问的统一路由
+MEDIA_URL ='/media/'
