@@ -14,6 +14,10 @@ class User(AbstractUser):
     #修改认证的字段为手机号
     USERNAME_FIELD = 'mobile'
 
+    #创建超级管理员必须输入的字段
+    REQUIRED_FIELDS =['username','email']#4006184000
+
+
     # 修改配置信息：
     class Meta:
         db_table = 'tb_users'  # 修改表名

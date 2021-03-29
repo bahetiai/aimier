@@ -409,3 +409,13 @@ class UserCenterView(LoginRequiredMixin,View):
         # 5、返回响应
         return response
 
+from  home.models import ArticleCategory
+class WriteBlogView(LoginRequiredMixin,View):
+    def get(self,request):
+        # 查询所有分类模型
+        categories =ArticleCategory.objects.all()
+        context ={
+            'categories' :categories
+        }
+
+        return render(request,'write_blog.html',context=context)
