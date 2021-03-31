@@ -410,8 +410,9 @@ class UserCenterView(LoginRequiredMixin,View):
         return response
 
 from  home.models import ArticleCategory
+from home.models import ArticleCategory,Article
 class WriteBlogView(LoginRequiredMixin,View):
-    def get(self,request):
+    def get(self, request):
         # 查询所有分类模型
         categories =ArticleCategory.objects.all()
         context ={
@@ -419,3 +420,51 @@ class WriteBlogView(LoginRequiredMixin,View):
         }
 
         return render(request,'write_blog.html',context=context)
+
+    def post(self, request):
+        '''
+        1、接受数据
+        2、验证数据
+        3、数据入库
+        4、跳转到指定界面
+        :param request:
+        :return:
+        '''
+        # 1、接受数据
+        avatar = request.FILES.get('avatar')
+        title = request.POST.get('title')
+        category_id = request.POST.get('category')
+        tags = request.POST.get('tags')
+        summary = request.POST.get('sumary')
+        content = request.POST.get('content')
+        user = request.user
+        # 2、验证数据
+        # 2.1验证数据是否齐全
+        if not all([avatar, title, category_id, tags, summary, content]):
+            return HttpResponseBadRequest('参数不齐全')
+        # 2.2判断分类id
+        try:
+
+            article_category = ArticleCategory.objects.get(id =category_id)
+        except Exception as e:
+            logger.error(e)
+            return HttpResponseBadRequest('没有此分类')
+
+        # 3、数据入库
+        try:
+            article = Article.objects.create(
+                author=user,
+                avatar=avatar,
+                category=article_category,
+                tags=tags,
+                title =title,
+                summary=summary,
+                content=content
+            )
+
+        except Exception as e:
+            logger.error(e)
+            return HttpResponseBadRequest('发布失败，请稍后重试')
+
+        # 4、跳转到指定界面
+        return redirect(reverse('home:index'))
